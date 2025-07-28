@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">MyShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a>
+                <a class="nav-link" href="{% url 'add_car' %}">Add Car</a>
+                <a class="nav-link" href="{% url 'add_brand' %}">Add Brand</a>
+                <a class="nav-link" href="{% url 'add_salon' %}">Add Salon</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-3">
+       <ul class="list-group mt-4">
+          <li class="list-group-item active text-center">Menu</li>
+          {% for s in salon %}
+            {% for b in brand %}
+              <li class="list-group-item">
+                <a href="{% url 'brand' b.pk s.pk %}">{{ b.title }} ({{ s.title }})</a>
+              </li>
+            {% endfor %}
+          {% endfor %}
+       </ul>
+
+    </div>
+
+    <div class="col-9">
+    {% for item in car %}
+    <div class="card mt-4 ">
+        <div class="card-header ">
+            {{item.model}}
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    {% if item.photo %}
+                    <img src="{{item.photo.url}}" alt="" width="350">
+                    {% else %}
+                    <img src="https://picsum.photos/200" alt="">
+                    {% endif %}
+                </div>
+                <div class="col-6">
+                    <h5 class="card-title">{{item.model}}</h5>
+                    <p class="card-price">{{item.price}}</p>
+                    <p class="card-yil">{{item.yil}}</p>
+                    <p class="card-colour">{{item.colour}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor%}
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
