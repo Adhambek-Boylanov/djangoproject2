@@ -1,29 +1,29 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from .forms import *
 from .models import *
 def info(request):
     salon = AvtoSalon.objects.all()
-    brand = Brand.objects.all()
-    car = Car.objects.all()
     context = {
-        "salon":salon,
-        "brand":brand,
-        "car":car
+        "salon":salon
     }
     return render(request,'index.html',context=context)
 
-def brand(request, pk, pk1):
+def salon_car(request, brand_pk, salon_pk):
     brand = Brand.objects.all()
-    salon = AvtoSalon.objects.all()
-    car = Car.objects.filter(brand_id = pk , salon_id =pk1)
+    car = Car.objects.filter(brand = brand_pk , salon = salon_pk)
     context = {
-        "salon":salon,
+        "salon_pk":salon_pk,
         "brand":brand,
         "car":car
     }
-    return render(request, 'brand.html',context=context)
+    return render(request, 'salon_car.html',context=context)
 
-
+def detail_salon(request,pk):
+    salon = get_object_or_404( AvtoSalon,pk = pk)
+    context = {
+        "salon":salon
+    }
+    return render(request,'detail_salon.html',context=context)
 
 def add_car(request):
     if request.method == "POST":

@@ -10,7 +10,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'dashboard' %}">MyShop</a>
+        <a class="navbar-brand" href="{% url 'dashboard' %}">Avtosalon</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,49 +26,29 @@
     </div>
 </nav>
 
-<div class="row">
-    <!-- Sidebar -->
-    <div class="col-3">
-      <ul class="list-group mt-4">
-      <li class="list-group-item active text-center">Menu</li>
-      {% for s in salon %}
-        {% for b in brand %}
-          <li class="list-group-item">
-            <a href="{% url 'brand' b.pk s.pk %}">{{ b.title }} ({{ s.title }})</a>
-          </li>
-        {% endfor %}
-      {% endfor %}
-    </ul>
-
+{% for item in salon%}
+<div class="card mt-4 ">
+    <div class="card-header ">
+        {{item.salon}}
     </div>
-
-    <div class="col-9">
-    {% for item in salon%}
-    <div class="card mt-4 ">
-        <div class="card-header ">
-            {{item.salon}}
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-6">
-                    {% if item.photo %}
-                    <img src="{{item.photo.url}}" alt="" width="350">
-                    {% else %}
-                    <img src="https://picsum.photos/200" alt="">
-                    {% endif %}
-                </div>
-                <div class="col-6">
-                    <h5 class="card-title">Nomi: {{item.title}}</h5>
-                    <p class="card-price">Context: {{item.context}}</p>
-                    <p class="card-yil">Email: {{item.email}}</p>
-                    <p class="card-colour">Phone: {{item.phone}}</p>
-                    <p class="card-colour">Addres: {{item.addres}}</p>
-
-                </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                {% if item.photo %}
+                <img src="{{item.photo.url}}" alt="" width="350">
+                {% else %}
+                <img src="https://picsum.photos/200" alt="">
+                {% endif %}
+            </div>
+            <div class="col-6">
+                <h5 class="card-title">Nomi: {{item.title}}</h5>
+                <p class="card-price">Context: {{item.context}}</p>
+                <button type="button" class="btn btn-outline-primary"><a href="{% url 'detail_salon' item.pk %}"> Batafsil </a></button>
             </div>
         </div>
     </div>
-    {% endfor%}
+</div>
+{% endfor%}
 </div>
 </div>
 
